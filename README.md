@@ -1,4 +1,4 @@
-LusciousUnreadExtension
+Luscious Unread Chrom Extension
 =======================
 
-A simple extension which gets the unread count of message
+A simple chrome extension which gets the unread count of messages on the Lucious website

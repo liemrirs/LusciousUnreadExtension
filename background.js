@@ -6,24 +6,16 @@ var isLoggedIn = false;
 var numOfMessages = 0;
 var content="";
 var username = "";
+var notifications= 0;
 
 //polls the terms page as it is static to determine if the user is logged and therefore if they have any new messages
-function getUnreadCount(callback) {
-	$.get( "https://luscious.net/terms", function( data ) {
-		var loggedIn = $( data).find('#unstickyheader .user_btn.right li').length === 3;
-		var numberOfMessages = $(data).find('#stickyheader ul.second_panel li:first').text().trim();
-		var unreadCount = (numberOfMessages==='')?'X':numberOfMessages ;
-		//returns the data to the callback function
-	 	callback(loggedIn,unreadCount);
-	});
-}
-
-//initiates the getUnreadCount function and sets the badge of the extension to the number of unread messages or X if not logged in
-function updateBadge() {
-	getUnreadCount(function(loggedIn,unreadCount){
-		isLoggedIn = loggedIn;
-		numOfMessages = unreadCount;
-		chrome.browserAction.setBadgeText({text:unreadCount});
+function getUnreadCount() {
+	$.get( "https://luscious.net/api/user/info/", function( data ) {
+		var json = jQuery.parseJSON(data);
+		isLoggedIn =  (username = json.user) !== "Anonymous";
+		notifications = json.no_noti;
+		numOfMessages = (!loggedIn)? "X": json.no_pms.toString();
+		chrome.browserAction.setBadgeText({text:numOfMessages});
 	});
 }
 
@@ -47,7 +39,7 @@ function updateMessages(){
 	});
 }
 
-var pollInterval = 1000 * 20; // poll every 20 secs, should not be less than 10 secs as advised by admin
+var pollInterval = 1000 * 10; // poll every 10 secs, should not be less than 10 secs as advised by admin
 
 function loggedIn(){
 	return isLoggedIn;
@@ -55,7 +47,7 @@ function loggedIn(){
 
 
 function startRequest() {
-  updateBadge();
+  getUnreadCount();
   updateMessages();
   window.setTimeout(startRequest, pollInterval);
 }

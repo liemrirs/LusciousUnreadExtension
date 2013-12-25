@@ -23,6 +23,7 @@ function updateMessages(){
     $('.username').html(bkg.username);
     //remove the Hi string from the username
     $('.username span:last').text( $('.username span:last').text().substr(2));
+    $('.notification .text').text(bkg.notifications);
     //access the content variable which contains the html for the messages div
     $('.content .messages').html(bkg.content);
     chrome.browserAction.setBadgeText({text:bkg.numOfMessages});

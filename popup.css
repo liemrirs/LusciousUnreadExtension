@@ -53,3 +53,7 @@ body {
         float:right;
         font-size: 20px;
       }
+      .notification .text{
+        display: inline;
+        margin-left: 2px;
+      }

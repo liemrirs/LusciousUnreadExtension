@@ -3,12 +3,13 @@
 
   "name": "Luscious unread messages",
   "description": "This extension shows the unread count of messages",
-  "version": "1.0",
+  "version": "1.1",
   "background": { "scripts": ["jquery.min.js","background.js"] },
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
+
   "permissions": [
     "http://luscious.net/",
     "https://luscious.net/"

@@ -3,17 +3,17 @@
 $(startRequest);
 //instance variables used in popup.js and this file
 var isLoggedIn = false;
-var numOfMessages = 0;
+var numOfMessages = "0";
 var content="";
 var username = "";
-var notifications= 0;
+var notifications= "0";
 
 //polls the terms page as it is static to determine if the user is logged and therefore if they have any new messages
 function getUnreadCount() {
 	$.get( "https://luscious.net/api/user/info/", function( data ) {
 		var json = jQuery.parseJSON(data);
-		isLoggedIn =  (username = json.user) !== "Anonymous";
-		notifications = json.no_noti;
+		isLoggedIn =  (json.user) !== "Anonymous";
+		notifications = json.no_noti.toString();
 		numOfMessages = (!loggedIn)? "X": json.no_pms.toString();
 		chrome.browserAction.setBadgeText({text:numOfMessages});
 	});

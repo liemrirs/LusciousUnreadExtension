@@ -14,7 +14,7 @@ function getUnreadCount() {
 		var json = jQuery.parseJSON(data);
 		isLoggedIn =  (json.user) !== "Anonymous";
 		notifications = json.no_noti.toString();
-		numOfMessages = (!loggedIn)? "X": json.no_pms.toString();
+		numOfMessages = (!isLoggedIn)? "X": json.no_pms.toString();
 		chrome.browserAction.setBadgeText({text:numOfMessages});
 	});
 }
